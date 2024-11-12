@@ -1,0 +1,30 @@
+; Semi-colon is a comment, program will ignore.
+;
+; This is the Mono8bitmap config file.
+;
+; Do not put any spaces before each entry!
+; Linux is strict about filenames in regards to Upper/Lower case letters. Mac too, i think.
+; The data entries should be in the following format-  Input File, Input Type, Output File, Output Type
+;
+; Input file name
+; ----------------
+;
+WHITE.GEN
+; Input file type
+; ---------------
+;
+W
+; Output file name
+; ----------------
+;
+WHITE.BMP
+; Output file type
+; ----------------
+;
+M
+; File Types - One capital letter only.
+; D - Decimal numbers with file formatting for use in Assembler
+; H - Hexadecimal numbers with file formatting for use in Assembler
+; M - the monochrome image - a .BMP file
+; R - just the raw data with no information. This is the .FNT file type on Atari 8 bit
+; W - All pixels are on / white.
