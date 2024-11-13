@@ -8,7 +8,7 @@ int LoadInBitmapData(const char * sInput, unsigned char * cPassback, int iLimit)
     int iValue = 0;
     int iCondition = 0;
     int iFound = 0;
-    int iHeader = 62;
+    int iHeader = 62; // Need to read this from the file!! Should be entry 11, 12,13 ,14
 
     FRead = fopen( sInput,"r");
 
@@ -19,7 +19,7 @@ int LoadInBitmapData(const char * sInput, unsigned char * cPassback, int iLimit)
     }
     else
     {
-        // Ignore the header
+        // Locate the start of data in the header
         for ( iCondition = 0; iCondition < iHeader; iCondition++)
         {
             iValue = getc(FRead);
@@ -70,8 +70,10 @@ int SaveAsBitmapData(const char * sOutput, unsigned char * cPassback, int iLimit
     char cZero = 0;
     char cWhite = 255;
     char cFlipped = 255;
-//    char cInputHi = 0;
-//    char cInputLo = 0;
+    char cHVresHi = 11; //linux requires values here that Windows default paint does not!
+    char cHVresLo = 19; //ditto
+    char cColoursInPalette = 2; //ditto
+
 
 
     F_Write = fopen( sOutput,"wb"); // do we need to use wb to indicate binary not text mode?
@@ -91,7 +93,10 @@ int SaveAsBitmapData(const char * sOutput, unsigned char * cPassback, int iLimit
         fputc( cZero, F_Write);
         fputc( cZero, F_Write);
         //-------------------------- Reserved - not used
-        fputs( "0000", F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
         //-------------------------- Offset - 4 chars
         fputc( cFileOffset, F_Write);
         fputc( cZero, F_Write);
@@ -128,26 +133,39 @@ int SaveAsBitmapData(const char * sOutput, unsigned char * cPassback, int iLimit
         fputc( cImageSizeHigh, F_Write);
         fputc( cZero, F_Write);
         fputc( cZero, F_Write);
-        //------------------------- Horizontal resolution- not used
-        fputs( "0000", F_Write);
-        //------------------------- Vertical resolution - not used
-        fputs( "0000", F_Write);
-        //------------------------- Palette info - not used
-        fputs( "0000", F_Write);
+        //------------------------- Horizontal resolution- not used in Windows
+        fputc( cHVresLo, F_Write);
+        fputc( cHVresHi, F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
+        //------------------------- Vertical resolution - not used in Windows
+        fputc( cHVresLo, F_Write);
+        fputc( cHVresHi, F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
+        //------------------------- Palette info - not used in Windows
+        fputc( cColoursInPalette, F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
+        fputc( cColoursInPalette, F_Write);
         //------------------------- Important Colours - not used
-        fputs( "0000", F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
         //------------------------- The unit of measurement used by Horizontal and Vertical resolution?
-        fputs( "00", F_Write);
-        //------------------------- Padding - ignore
-        fputs( "00", F_Write);
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
+        //------------------------- Padding - ignore !
+        fputc( cZero, F_Write);
+        fputc( cZero, F_Write);
         //------------------------- Where does the image start drawing from? AKA Flipped image
         fputc( cFlipped, F_Write);
         fputc( cFlipped, F_Write);
-        //fputc( cBits, F_Write); // Windows bitmap expect the flip! Don't change this
-        //fputc( cZero, F_Write);
         //------------------------- Half-toning info - not used.
-        fputc( cZero, F_Write); // using white to put 255 just in case
         fputc( cWhite, F_Write);
+        fputc( cZero, F_Write); // using white to put 255 just in case
+
 
         // Write the image data
         iFound = 0;
