@@ -147,9 +147,9 @@ int SaveAsBitmapData(const char * sOutput, unsigned char * cPassback, int iLimit
         fputc( cColoursInPalette, F_Write);
         fputc( cZero, F_Write);
         fputc( cZero, F_Write);
-        fputc( cColoursInPalette, F_Write);
-        //------------------------- Important Colours - not used
         fputc( cZero, F_Write);
+        //------------------------- Important Colours - not used
+        fputc( cColoursInPalette, F_Write);
         fputc( cZero, F_Write);
         fputc( cZero, F_Write);
         fputc( cZero, F_Write);
