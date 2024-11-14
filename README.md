@@ -14,4 +14,8 @@ Bit depth 1 or 2 colours
 
 Size 1086 bytes
 
-You can generate a test bitmap by setting the the input type as 'W' and the output type as 'M'
+You can generate a test bitmap by setting the the input type as 'W' and the output type as 'M'.
+
+The program has been compiled and tested on Windows 10 using the included C++ compiler that comes with Code:Blocks.
+Further testing done on Lubuntu using the g++ compiler.
+I used the default file viewer / paint programs to view the bitmaps and found Windows was more tolerant with incorrect header data in the bitmap files.
