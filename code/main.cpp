@@ -118,7 +118,7 @@ int main()
     if ( cInType == 'M') // monochrome bitmap - TODO write the sort2raw code!
     {
 
-        if ( LoadInBitmapData(sInFile.c_str(), pData, ATASCII_SIZE) == 66 )
+        if ( LoadInBitmapData(sInFile.c_str(), pData, ATASCII_SIZE) == 666 )
         {
             cout << "Error loading the bitmap file! " << endl;
             return 0;
